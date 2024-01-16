@@ -1,0 +1,46 @@
+=def tampil_papan(papan):
+    for baris in papan:
+        print("|".join(baris))
+        print("-" * 5)
+
+def cek_kemenangan(papan, pemain):
+    # Cek baris dan kolom
+    for i in range(3):
+        if all(papan[i][j] == pemain for j in range(3)) or all(papan[j][i] == pemain for j in range(3)):
+            return True
+
+    # Cek diagonal
+    if all(papan[i][i] == pemain for i in range(3)) or all(papan[i][2 - i] == pemain for i in range(3)):
+        return True
+
+    return False
+
+def main():
+    papan = [[" " for _ in range(3)] for _ in range(3)]
+    pemain = "X"
+
+    for _ in range(9):
+        tampil_papan(papan)
+
+        baris = int(input(f"Pemain {pemain}, masukkan baris (0-2): "))
+        kolom = int(input(f"Pemain {pemain}, masukkan kolom (0-2): "))
+
+        if papan[baris][kolom] == " ":
+            papan[baris][kolom] = pemain
+
+            if cek_kemenangan(papan, pemain):
+                tampil_papan(papan)
+                print(f"Pemain {pemain} menang!")
+                break
+
+            pemain = "O" if pemain == "X" else "X"
+        else:
+            print("Posisi sudah terisi. Coba lagi.")
+
+    else:
+        tampil_papan(papan)
+        print("Permainan seri.")
+
+# Jalankan permainan
+main()
+1
